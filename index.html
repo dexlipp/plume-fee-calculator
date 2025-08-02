@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plume Fee Calculator Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Plume Fee Calculator Pro</div>
+            <p style="color: var(--plume-text-secondary); font-size: 14px; margin-top: 5px;">
+                Расширенный анализ комиссий кошелька в сети Plume
+            </p>
+        </header>
+        
+        <div class="section">
+            <div class="input-group">
+                <label for="address">Адрес кошелька Plume</label>
+                <i class="fas fa-key input-icon"></i>
+                <input 
+                    type="text" 
+                    id="address" 
+                    placeholder="0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5"
+                    spellcheck="false"
+                >
+            </div>
+            
+            <button id="calculateBtn" class="btn">
+                <i class="fas fa-calculator"></i> Рассчитать комиссии
+            </button>
+            
+            <div id="progressContainer" class="progress-container">
+                <div id="progressBar" class="progress-bar"></div>
+                <div id="progressText" class="progress-text">Загрузка данных...</div>
+            </div>
+            
+            <div id="error" class="error"></div>
+            <div id="success" class="success"></div>
+        </div>
+        
+        <div class="section result-section" id="resultSection">
+            <div class="highlight" id="totalFee">0.00000000 PLUME</div>
+            
+            <div class="metric-row">
+                <span>Всего транзакций:</span>
+                <span id="txCount">0</span>
+            </div>
+            
+            <div class="metric-row">
+                <span>Средняя комиссия:</span>
+                <span id="avgFee">0.00000000 PLUME</span>
+            </div>
+            
+            <div class="metric-row">
+                <span>Медианная комиссия:</span>
+                <span id="medianFee">0.00000000 PLUME</span>
+            </div>
+            
+            <div class="metric-row">
+                <span>Самая дорогая транзакция:</span>
+                <span id="maxFee">0.00000000 PLUME</span>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="feeChart"></canvas>
+            </div>
+            
+            <div>
+                <h4>Топ-5 дорогих транзакций:</h4>
+                <div id="topFees" class="top-fees-list"></div>
+            </div>
+        </div>
+        
+        <div class="section history-section" id="historySection">
+            <h3 style="margin-bottom: 15px;">История запросов</h3>
+            <div id="historyList"></div>
+            <div style="margin-top: 15px; text-align: right;">
+                <button id="clearHistoryBtn" class="btn btn-sm">
+                    <i class="fas fa-trash"></i> Очистить историю
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="src/app.js"></script>
+</body>
+</html>
