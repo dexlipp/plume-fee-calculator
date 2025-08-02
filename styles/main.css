@@ -1,0 +1,230 @@
+:root {
+    --plume-primary: #E74C3C;
+    --plume-secondary: #C0392B;
+    --plume-light: #FFFFFF;
+    --plume-bg: #F8F9FA;
+    --plume-card: #FFFFFF;
+    --plume-border: #E0E0E0;
+    --plume-text: #2C3E50;
+    --plume-text-secondary: #7F8C8D;
+    --plume-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --plume-success: #27AE60;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+    background: var(--plume-bg);
+    color: var(--plume-text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 500px;
+    width: 100%;
+}
+
+header {
+    text-align: center;
+    padding: 30px 0 20px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--plume-primary);
+}
+
+.section {
+    background: var(--plume-card);
+    border: 1px solid var(--plume-border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: var(--plume-shadow);
+}
+
+.input-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--plume-text-secondary);
+    font-weight: 500;
+}
+
+input {
+    width: 100%;
+    padding: 14px 16px 14px 44px;
+    background: var(--plume-bg);
+    border: 1px solid var(--plume-border);
+    border-radius: 12px;
+    color: var(--plume-text);
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--plume-primary);
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.input-icon {
+    position: absolute;
+    left: 16px;
+    top: 38px;
+    color: var(--plume-primary);
+}
+
+.btn {
+    background: var(--plume-primary);
+    color: white;
+    border: none;
+    padding: 16px;
+    width: 100%;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn:hover {
+    background: var(--plume-secondary);
+    transform: translateY(-2px);
+}
+
+.btn:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-sm {
+    padding: 8px 12px;
+    font-size: 14px;
+    width: auto;
+}
+
+.progress-container {
+    margin: 20px 0;
+    background: rgba(231, 76, 60, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    display: none;
+}
+
+.progress-bar {
+    height: 10px;
+    background: var(--plume-primary);
+    width: 0%;
+    transition: width 0.3s;
+}
+
+.progress-text {
+    text-align: center;
+    margin-top: 5px;
+    font-size: 14px;
+    color: var(--plume-text-secondary);
+}
+
+.highlight {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--plume-primary);
+    text-align: center;
+    margin: 20px 0;
+}
+
+.metric-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: rgba(231, 76, 60, 0.05);
+    border-radius: 8px;
+}
+
+.error {
+    color: #E74C3C;
+    background: rgba(231, 76, 60, 0.1);
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 16px;
+    display: none;
+    font-size: 14px;
+    border-left: 3px solid var(--plume-primary);
+}
+
+.success {
+    color: var(--plume-success);
+    background: rgba(39, 174, 96, 0.1);
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 16px;
+    display: none;
+    font-size: 14px;
+    border-left: 3px solid var(--plume-success);
+}
+
+.result-section {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.history-section {
+    display: none;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--plume-border);
+    cursor: pointer;
+}
+
+.history-item:hover {
+    background-color: rgba(231, 76, 60, 0.05);
+}
+
+.chart-container {
+    margin-top: 20px;
+    height: 250px;
+}
+
+.top-fees-list {
+    margin-top: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.top-fee-item {
+    padding: 8px;
+    border-bottom: 1px dashed var(--plume-border);
+    font-size: 13px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
