@@ -24,6 +24,7 @@ const EXAMPLE_ADDRESSES = [
 ];
 
 let feeWorker = null;
+let progressInterval = null;
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
@@ -62,6 +63,12 @@ async function calculateFees() {
     const resultSection = document.getElementById('resultSection');
     const calculateBtn = document.getElementById('calculateBtn');
     
+    // Очищаем предыдущий интервал прогресса
+    if (progressInterval) {
+        clearInterval(progressInterval);
+        progressInterval = null;
+    }
+    
     // Защита от XSS
     address = sanitizeInput(address);
     
@@ -93,14 +100,38 @@ async function calculateFees() {
         
         updateProgress(10, 'Подключение к блокчейну...');
         
-        const transactions = await fetchTransactions(address);
+        // Запускаем прогресс-индикатор загрузки
+        let loadedCount = 0;
+        let totalToLoad = 0;
+        
+        // Создаем интервал для обновления прогресса
+        progressInterval = setInterval(() => {
+            if (totalToLoad > 0) {
+                const percent = Math.min(99, Math.floor((loadedCount / totalToLoad) * 90));
+                updateProgress(
+                    10 + percent, 
+                    `Загружено ${loadedCount} из ${totalToLoad} транзакций...`
+                );
+            }
+        }, 200);
+        
+        // Получаем транзакции с колбэком прогресса
+        const transactions = await fetchTransactions(address, (count, total) => {
+            loadedCount = count;
+            totalToLoad = total;
+        });
+        
+        // Останавливаем интервал прогресса
+        clearInterval(progressInterval);
+        progressInterval = null;
+        
         const totalTx = transactions.length;
         
         if (totalTx === 0) {
             throw new Error("Для этого адреса не найдено транзакций");
         }
         
-        updateProgress(30, `Обработка ${totalTx} транзакций...`);
+        updateProgress(90, `Обработка ${totalTx} транзакций...`);
         
         // Отправляем данные в Web Worker
         feeWorker.postMessage({ transactions });
@@ -109,6 +140,12 @@ async function calculateFees() {
         addToHistory(address);
         
     } catch (err) {
+        // Останавливаем интервал прогресса при ошибке
+        if (progressInterval) {
+            clearInterval(progressInterval);
+            progressInterval = null;
+        }
+        
         showError(err.message || 'Произошла ошибка при расчете комиссий');
         console.error("Ошибка:", err);
         progressContainer.style.display = 'none';
@@ -162,6 +199,10 @@ function displayResults(data) {
 window.addEventListener('beforeunload', () => {
     if (feeWorker) {
         feeWorker.terminate();
+    }
+    
+    if (progressInterval) {
+        clearInterval(progressInterval);
     }
 });
 
