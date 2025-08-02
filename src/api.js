@@ -1,8 +1,8 @@
 // Список прокси-серверов для обхода CORS
 const PROXY_SERVERS = [
-    'https://api.allorigins.win/raw?url=',
     'https://corsproxy.io/?',
-    'https://api.codetabs.com/v1/proxy/?quest='
+    'https://api.codetabs.com/v1/proxy/?quest=',
+    'https://thingproxy.freeboard.io/fetch/'
 ];
 
 // Текущий индекс прокси
